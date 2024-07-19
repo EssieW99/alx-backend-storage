@@ -26,7 +26,7 @@ class Cache:
         return key
 
     def get(self, key: str,
-            fn: Callable[[bytes], Union[str, bytes, int, float]]) -> str:
+            fn: Optional[Callable] = None) -> str:
         """
         Retrieves the data associated with the key from Redis.
         Callable arg converts the data back to the desired format
@@ -46,7 +46,7 @@ class Cache:
         to a UTF-8 string
         """
 
-        return self.get(key, lambda x: x.decode('utf-8'))
+        return self.get(key, lambda x: x.decode('utf-8', 'strict'))
 
     def get_int(self, key: str) -> Optional[int]:
         """
